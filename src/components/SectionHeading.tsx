@@ -14,7 +14,7 @@ type SectionHeadingProps = {
 
 export function SectionHeading({ label, title, children }: SectionHeadingProps) {
   return (
-    <div className="max-w-2xl">
+    <div className="reveal max-w-2xl">
       <p className={cn('flex items-center gap-2 text-muted', eyebrow)}>
         <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
         <FormattedMessage id={label} />

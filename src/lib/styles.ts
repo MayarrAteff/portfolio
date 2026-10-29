@@ -1,3 +1,8 @@
+import type { CSSProperties } from 'react';
+
+/** Position in a row, for the `--stagger` delay the reveal animations read (see index.css). */
+export const stagger = (index: number) => ({ '--stagger': index }) as CSSProperties;
+
 const focusRing =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg';
 

@@ -6,7 +6,7 @@ import { SearchIcon } from '@/components/icons';
 import { SectionHeading } from '@/components/SectionHeading';
 import { type Skill, type SkillGroup, skillGroups, skills } from '@/data/skills';
 import { cn } from '@/lib/cn';
-import { card, focusRing } from '@/lib/styles';
+import { card, focusRing, stagger } from '@/lib/styles';
 
 type Filter = SkillGroup | 'all';
 
@@ -77,7 +77,7 @@ export function Skills() {
         <FormattedMessage id="skills.lead" />
       </SectionHeading>
 
-      <div className="mt-10 grid gap-4">
+      <div className="reveal mt-10 grid gap-4">
         <label className="flex items-center gap-3 rounded-2xl border border-line/10 bg-surface px-4 transition focus-within:border-accent focus-within:ring-4 focus-within:ring-accent/15">
           <SearchIcon className="h-5 w-5 text-muted" />
           <span className="sr-only">
@@ -136,15 +136,16 @@ export function Skills() {
       </div>
 
       <div className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-        {groups.map((group) => {
+        {groups.map((group, index) => {
           const groupSkills = skills.filter((skill) => skill.group === group);
           return (
             <div
               key={group}
+              style={stagger(index % 3)}
               className={cn(
                 card,
                 tone[group],
-                'tone-glow relative overflow-hidden p-6',
+                'tone-glow reveal relative overflow-hidden p-6',
                 // Frontend is the core of the job, so it gets the wide card.
                 filter === 'all' && group === 'frontend' && 'lg:col-span-2',
               )}

@@ -44,7 +44,7 @@ export function Work() {
     <section id="work" className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
       <SectionHeading label="section.work.label" title="section.work.title" />
 
-      <article className={cn(card, 'mt-12 overflow-hidden')}>
+      <article className={cn(card, 'reveal mt-12 overflow-hidden')}>
         <div className="grid lg:grid-cols-[1fr_1.15fr]">
           <div className="p-6 sm:p-10">
             <Kind id="project.side" />
@@ -94,7 +94,7 @@ export function Work() {
         </div>
       </article>
 
-      <article className={cn(card, 'mt-6 grid overflow-hidden lg:grid-cols-[1.15fr_1fr]')}>
+      <article className={cn(card, 'reveal mt-6 grid overflow-hidden lg:grid-cols-[1.15fr_1fr]')}>
         <QuotePreview />
         <div className="p-6 sm:p-10">
           <Kind id="project.day" />

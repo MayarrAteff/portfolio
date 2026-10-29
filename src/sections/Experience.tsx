@@ -57,7 +57,7 @@ function Education() {
   const { locale } = useLocale();
 
   return (
-    <div className="mt-14">
+    <div className="reveal mt-14">
       <p className={cn('flex items-center gap-2 text-muted', eyebrow)}>
         <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
         <FormattedMessage id="experience.education" />
@@ -108,35 +108,37 @@ export function Experience() {
 
       {/* On wide screens, hovering one role dims the others, so the one being read stands out. */}
       <ol className="group/roles mt-12 grid gap-3">
+        {/* The reveal animates the list item; the card inside keeps its own opacity for the hover dimming. */}
         {roles.map((role) => (
-          <li
-            key={role.company}
-            className={cn(
-              card,
-              'grid gap-3 p-6 transition duration-300 hover:border-line/20 sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-8 sm:p-8 lg:hover:!opacity-100 lg:group-hover/roles:opacity-60',
-            )}
-          >
-            <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-start">
-              <p className="font-mono text-xs uppercase tracking-wider text-muted">
-                {month(role.start)} – {role.end ? month(role.end) : <FormattedMessage id="experience.present" />}
-              </p>
-              {!role.end && (
-                <span className="rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-semibold text-accent">
-                  <FormattedMessage id="experience.now" />
-                </span>
+          <li key={role.company} className="reveal">
+            <div
+              className={cn(
+                card,
+                'grid gap-3 p-6 transition duration-300 hover:border-line/20 sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-8 sm:p-8 lg:hover:!opacity-100 lg:group-hover/roles:opacity-60',
               )}
-            </div>
-            <div>
-              <h3 className="font-display text-2xl font-bold tracking-tight rtl:tracking-normal">{role.company}</h3>
-              <p className="mt-1 text-sm font-medium text-accent">{role.title[locale]}</p>
-              <ul className="mt-4 space-y-2 text-muted">
-                {role.points.map((point) => (
-                  <li key={point.en} className="flex gap-2.5 leading-relaxed">
-                    <span aria-hidden="true" className="mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-full bg-line/25" />
-                    {point[locale]}
-                  </li>
-                ))}
-              </ul>
+            >
+              <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-start">
+                <p className="font-mono text-xs uppercase tracking-wider text-muted">
+                  {month(role.start)} – {role.end ? month(role.end) : <FormattedMessage id="experience.present" />}
+                </p>
+                {!role.end && (
+                  <span className="rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-semibold text-accent">
+                    <FormattedMessage id="experience.now" />
+                  </span>
+                )}
+              </div>
+              <div>
+                <h3 className="font-display text-2xl font-bold tracking-tight rtl:tracking-normal">{role.company}</h3>
+                <p className="mt-1 text-sm font-medium text-accent">{role.title[locale]}</p>
+                <ul className="mt-4 space-y-2 text-muted">
+                  {role.points.map((point) => (
+                    <li key={point.en} className="flex gap-2.5 leading-relaxed">
+                      <span aria-hidden="true" className="mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-full bg-line/25" />
+                      {point[locale]}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </li>
         ))}

@@ -27,7 +27,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-      <div className={cn(card, 'relative overflow-hidden p-8 sm:p-14')}>
+      <div className={cn(card, 'reveal relative overflow-hidden p-8 sm:p-14')}>
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -start-40 -top-48 h-[28rem] w-[28rem] bg-[radial-gradient(closest-side,rgb(var(--g1)/0.18),transparent)]"

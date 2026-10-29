@@ -9,7 +9,7 @@ import { dailyStack } from '@/data/skills';
 import type { Localized } from '@/i18n/locale';
 import { useLocale } from '@/i18n/LocaleProvider';
 import { cn } from '@/lib/cn';
-import { button, card, eyebrow, focusRing } from '@/lib/styles';
+import { button, card, eyebrow, focusRing, stagger } from '@/lib/styles';
 import { useLocalTime } from '@/lib/useLocalTime';
 
 const initials: Localized = { en: 'MA', ar: 'م ع' };
@@ -78,7 +78,10 @@ export function Hero() {
           </div>
         </article>
 
-        <article className={cn(card, 'flex flex-col justify-between gap-4 p-5 [grid-area:now]')}>
+        <article
+          className={cn(card, 'rise-in flex flex-col justify-between gap-4 p-5 [grid-area:now]')}
+          style={stagger(1)}
+        >
           <p className={label}>
             <FormattedMessage id="hero.now.label" />
           </p>
@@ -99,7 +102,11 @@ export function Hero() {
         </article>
 
         <article
-          className={cn(card, 'relative flex flex-col justify-between gap-4 overflow-hidden p-5 [grid-area:time]')}
+          className={cn(
+            card,
+            'rise-in relative flex flex-col justify-between gap-4 overflow-hidden p-5 [grid-area:time]',
+          )}
+          style={stagger(2)}
         >
           <div
             aria-hidden="true"
@@ -126,8 +133,9 @@ export function Hero() {
           className={cn(
             card,
             focusRing,
-            'group grid items-center gap-5 p-5 transition [grid-area:project] hover:border-line/20 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]',
+            'rise-in group grid items-center gap-5 p-5 transition [grid-area:project] hover:border-line/20 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]',
           )}
+          style={stagger(3)}
         >
           <div>
             <p className={label}>
@@ -157,7 +165,7 @@ export function Hero() {
           </div>
         </a>
 
-        <article className={cn(card, 'flex flex-col gap-4 p-5 [grid-area:stack]')}>
+        <article className={cn(card, 'rise-in flex flex-col gap-4 p-5 [grid-area:stack]')} style={stagger(4)}>
           <p className={label}>
             <FormattedMessage id="hero.stack.label" />
           </p>
@@ -194,8 +202,9 @@ export function Hero() {
           className={cn(
             card,
             focusRing,
-            'flex flex-col justify-between gap-4 p-5 text-start transition [grid-area:lang] hover:border-line/20',
+            'rise-in flex flex-col justify-between gap-4 p-5 text-start transition [grid-area:lang] hover:border-line/20',
           )}
+          style={stagger(5)}
         >
           <span className="sr-only">
             <FormattedMessage id="lang.switchLabel" />
@@ -229,8 +238,9 @@ export function Hero() {
           href="#contact"
           className={cn(
             focusRing,
-            'bg-gradient-brand flex flex-col justify-between gap-4 rounded-3xl p-5 text-white transition [grid-area:contact] hover:brightness-110',
+            'bg-gradient-brand rise-in flex flex-col justify-between gap-4 rounded-3xl p-5 text-white transition [grid-area:contact] hover:brightness-110',
           )}
+          style={stagger(6)}
         >
           <span className={cn(eyebrow, 'text-white/90')}>
             <FormattedMessage id="hero.contact.label" />
