@@ -72,18 +72,37 @@ export function MoonIcon({ className }: IconProps) {
   );
 }
 
-export function ChevronIcon({ className }: IconProps) {
+export function CheckIcon({ className }: IconProps) {
   return (
     <Icon className={className}>
-      <path d="m6 15 6-6 6 6" />
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
     </Icon>
   );
 }
 
-export function CloseIcon({ className }: IconProps) {
+export function GraduationCapIcon({ className }: IconProps) {
   return (
     <Icon className={className}>
-      <path d="M6 6l12 12M18 6 6 18" />
+      <path d="M22 9 12 4 2 9l10 5 10-5Z" />
+      <path d="M6 11.5V16c0 1.66 2.69 3 6 3s6-1.34 6-3v-4.5M22 9v6" />
+    </Icon>
+  );
+}
+
+export function CopyIcon({ className }: IconProps) {
+  return (
+    <Icon className={className}>
+      <rect x="9" y="9" width="11" height="11" rx="2" />
+      <path d="M5 15V6a2 2 0 0 1 2-2h9" />
+    </Icon>
+  );
+}
+
+export function SearchIcon({ className }: IconProps) {
+  return (
+    <Icon className={className}>
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-3.5-3.5" />
     </Icon>
   );
 }

@@ -1,47 +1,59 @@
-# Mayar Atef: a portfolio that explains itself
+# Mayar Atef: portfolio
 
-My personal site, built with React 19, TypeScript and Tailwind CSS, in English and Arabic (full RTL).
+My personal site: a front-end developer in Alexandria, Egypt, building fast, bilingual React apps. Built with React 19, TypeScript and Tailwind CSS, in English and Arabic (full RTL), light and dark.
 
-**Press `X` on the page** (or add `?xray=1` to the URL) to turn on **X-ray mode**. Every component then shows:
+![Hero, dark theme](docs/hero.png)
 
-- a dashed outline with its name,
-- a live render count that flashes when the component renders,
-- a note on why it's built that way, with a link to its source file in this repo.
+![The same page in Arabic, light theme](docs/arabic.png)
 
-![Hero section](docs/hero.png)
+![Skills, searching for "state"](docs/skills.png)
 
-![X-ray mode on the Skills Lab, with a component note and the performance panel open](docs/xray.png)
+## What's on the page
 
-![The same page in Arabic, mirrored right-to-left](docs/arabic.png)
+- **A bento hero.** One screen that answers what a recruiter wants to know: who I am, where I work now, my local time in Alexandria, my featured project, my daily stack, and how to reach me. The languages card is the real language switch.
+- **Selected work.** HireFlow (side project, with a live demo and source) and Quotem (day job, private, shown as a redrawn screen with made-up data).
+- **Experience** as cards; on wide screens, hovering one role dims the rest.
+- **Skills** grouped by the job they do, each group in its own color, with real logos, filter chips and a search that also matches keywords ("rtl" finds React Intl, "forms" finds React Hook Form). Press <kbd>/</kbd> to jump to it.
+- **Contact** with the email (and a copy button), LinkedIn, GitHub and the CV.
 
 ## Things worth reading in the code
 
-| What                                                                                                                     | Where                                                               |
-| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
-| Render counter that never causes renders itself (compares `children` identity, writes to the DOM in a layout effect)     | [`src/xray/useRenderCount.ts`](src/xray/useRenderCount.ts)          |
-| Two contexts, so selecting a label doesn't re-render sections that only care whether X-ray is on                          | [`src/xray/XRayProvider.tsx`](src/xray/XRayProvider.tsx)            |
-| Skills Lab: a live `React.memo` on/off experiment that counts how many cards re-render per keystroke                     | [`src/sections/SkillsLab.tsx`](src/sections/SkillsLab.tsx)          |
-| Performance panel loaded with `React.lazy`, build stats read with `use()`, Web Vitals through `useSyncExternalStore`     | [`src/xray/PerfHud.tsx`](src/xray/PerfHud.tsx), [`src/lib/vitals.ts`](src/lib/vitals.ts) |
-| A small Vite plugin that gzips the build output and writes `build-stats.json` for the panel                                | [`build-stats.ts`](build-stats.ts)                                  |
-| Theme as a class on `<html>` plus an inline script, so no flash of the wrong theme and only one component re-renders      | [`src/components/ThemeToggle.tsx`](src/components/ThemeToggle.tsx), [`index.html`](index.html) |
-| Typed translations: a missing Arabic string or a mistyped message id fails the build                                     | [`src/i18n/`](src/i18n/)                                            |
-| RTL through `dir` and logical utilities (`ps-4`, `start-0`); only directional icons are mirrored                          | [`src/components/icons.tsx`](src/components/icons.tsx)              |
+| What                                                                                                                | Where                                                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| The bento grid as named `grid-template-areas`, which mirror automatically in Arabic                                 | [`src/index.css`](src/index.css), [`src/sections/Hero.tsx`](src/sections/Hero.tsx)                                                         |
+| Language switch as a view transition: the new page is revealed in the direction it reads                            | [`src/lib/viewTransition.ts`](src/lib/viewTransition.ts), [`src/i18n/LocaleProvider.tsx`](src/i18n/LocaleProvider.tsx)                     |
+| Brand logos from Simple Icons, with near-black and near-white logos switching to the text color where they'd vanish | [`src/components/BrandIcon.tsx`](src/components/BrandIcon.tsx), [`src/data/skills.ts`](src/data/skills.ts)                                 |
+| Skills search and filters, with a live result count for screen readers                                              | [`src/sections/Skills.tsx`](src/sections/Skills.tsx)                                                                                       |
+| Project previews drawn in HTML and CSS, not screenshots, so they follow the theme and mirror in Arabic              | [`src/components/BoardPreview.tsx`](src/components/BoardPreview.tsx), [`src/components/QuotePreview.tsx`](src/components/QuotePreview.tsx) |
+| A small Vite plugin that preloads the hero fonts, so they download alongside the JavaScript                         | [`vite.config.ts`](vite.config.ts)                                                                                                         |
+| Arabic font loaded per weight, so its `unicode-range` keeps it from downloading on English pages                    | [`src/main.tsx`](src/main.tsx)                                                                                                             |
+| Theme as a class on `<html>` plus an inline script, so there's no flash of the wrong theme                          | [`src/components/ThemeToggle.tsx`](src/components/ThemeToggle.tsx), [`index.html`](index.html)                                             |
+| Typed translations: a missing Arabic string or a mistyped message id fails the build                                | [`src/i18n/`](src/i18n/)                                                                                                                   |
 
-## Numbers (production build)
+## Numbers (production build, served with gzip, Lighthouse 12)
 
-- Lighthouse: **100 / 100 / 100 / 100** on desktop; **96 / 100 / 100 / 100** on mobile.
-- Initial JavaScript is about **102 KB gzip**. The performance panel is a separate **~1 KB** chunk that loads only when X-ray turns on.
-- No UI library and no animation library. Section reveals use `IntersectionObserver` and CSS transitions.
+- Lighthouse: **100 / 100 / 100 / 100** on desktop; **93 / 100 / 100 / 100** on mobile, in both light and dark themes.
+- No accessibility issues from axe in English and Arabic, light and dark.
+- Initial JavaScript is about **116 KB gzip**.
+- No UI library and no animation library.
+
+## Design
+
+| Area   | Choice                                                                                                          |
+| ------ | --------------------------------------------------------------------------------------------------------------- |
+| Colors | Zinc neutrals, one violet accent, and a blue-violet-pink gradient for a few highlights; a color per skill group |
+| Type   | Bricolage Grotesque for headings, Geist for text, Geist Mono for labels, IBM Plex Sans Arabic for Arabic        |
+| Mark   | An "M" selected like a layer in a design tool, resize handles and all (also the favicon)                        |
 
 ## Tech stack
 
-| Area    | Tools                                                                   |
-| ------- | ----------------------------------------------------------------------- |
-| Core    | React 19, TypeScript, Vite                                              |
-| Styling | Tailwind CSS with CSS-variable color tokens, self-hosted fonts          |
-| i18n    | react-intl (English / Arabic, RTL), typed message ids                   |
-| Metrics | web-vitals, a custom Vite build-stats plugin                            |
-| Quality | ESLint (incl. React Compiler rules), Prettier                           |
+| Area    | Tools                                                          |
+| ------- | -------------------------------------------------------------- |
+| Core    | React 19, TypeScript, Vite                                     |
+| Styling | Tailwind CSS with CSS-variable color tokens, self-hosted fonts |
+| i18n    | react-intl (English / Arabic, RTL), typed message ids          |
+| Icons   | Simple Icons (brand logos), hand-drawn SVG for UI icons        |
+| Quality | ESLint (incl. React Compiler rules), Prettier                  |
 
 ## Getting started
 
@@ -50,12 +62,6 @@ Requires Node 22 (see `.nvmrc`).
 ```bash
 npm install
 npm run dev        # http://localhost:3005
-```
-
-Bundle sizes in the performance panel only appear in a production build:
-
-```bash
-npm run build && npm run preview
 ```
 
 ## Scripts
@@ -73,15 +79,13 @@ npm run build && npm run preview
 
 ```
 src/
-  xray/        X-ray mode: provider, <Inspect> wrapper, render counter, note panel, performance panel
-  sections/    Hero, FeaturedProject (HireFlow), Experience, SkillsLab, Contact
-  components/  header, footer, toggles, icons, board preview, reveal-on-scroll
+  sections/    Hero (bento), Work (HireFlow + Quotem), Experience, Skills, Contact
+  components/  header, footer, toggles, logo mark, brand icons, project previews, icons
   data/        typed content in English and Arabic (experience, projects, skills, links)
-  i18n/        messages (en.json, ar.json), locale provider, rich-text tags
-  lib/         Web Vitals store, shared styles, class-name helper
-build-stats.ts Vite plugin that writes build-stats.json
+  i18n/        messages (en.json, ar.json), locale provider
+  lib/         view transitions, local time, shared styles, class-name helper
 ```
 
 ## Related
 
-[HireFlow](https://github.com/MayarrAteff/hireflow) is a multi-portal hiring platform (React, TypeScript, Supabase). It's the featured project on the site. [Live demo](https://hireflow-sigma-nine.vercel.app/)
+[HireFlow](https://github.com/MayarrAteff/hireflow) is a multi-portal hiring platform (React, TypeScript, Supabase). It's the featured side project on the site. [Live demo](https://hireflow-sigma-nine.vercel.app/)

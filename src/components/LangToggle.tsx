@@ -1,34 +1,32 @@
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { useLocale } from '@/i18n/LocaleProvider';
+import { cn } from '@/lib/cn';
 import { iconButton } from '@/lib/styles';
-import { Inspect } from '@/xray/Inspect';
 
+/** Shows both languages with the current one lit, so it's clear what the button does in either language. */
 export function LangToggle() {
-  const intl = useIntl();
   const { locale, setLocale } = useLocale();
   const next = locale === 'en' ? 'ar' : 'en';
 
   return (
-    <Inspect
-      name="LangToggle"
-      file="src/components/LangToggle.tsx"
-      note="xray.note.langToggle"
-      compact
-      label="below"
-      className="rounded-full"
+    <button
+      type="button"
+      onClick={() => setLocale(next)}
+      className={cn(iconButton, 'gap-1.5 px-3 text-xs font-semibold')}
     >
-      <button
-        type="button"
-        onClick={() => setLocale(next)}
-        // The visible language name is the accessible name; the hint is only a tooltip.
-        title={intl.formatMessage({ id: 'lang.switchLabel' })}
-        className={`${iconButton} text-sm font-medium`}
-      >
-        <span lang={next}>
-          <FormattedMessage id="lang.switch" />
-        </span>
-      </button>
-    </Inspect>
+      <span className="sr-only">
+        <FormattedMessage id="lang.switchLabel" />
+      </span>
+      <span lang="en" className={locale === 'en' ? 'text-fg' : 'text-muted'}>
+        EN
+      </span>
+      <span aria-hidden="true" className="text-muted">
+        ·
+      </span>
+      <span lang="ar" className={cn('text-sm', locale === 'ar' ? 'text-fg' : 'text-muted')}>
+        ع
+      </span>
+    </button>
   );
 }

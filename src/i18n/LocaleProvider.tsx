@@ -1,5 +1,7 @@
-import { createContext, type ReactNode, use, useEffect, useMemo, useState } from 'react';
+import { createContext, type ReactNode, use, useLayoutEffect, useMemo, useState } from 'react';
 import { IntlProvider } from 'react-intl';
+
+import { withViewTransition } from '@/lib/viewTransition';
 
 import ar from './ar.json';
 import en from './en.json';
@@ -10,6 +12,7 @@ const messages: Record<Locale, typeof en> = { en, ar };
 
 type LocaleContextValue = {
   locale: Locale;
+  /** Switches language with the mirror flip: the new page sweeps in from the side it's read from. */
   setLocale: (locale: Locale) => void;
 };
 
@@ -17,9 +20,10 @@ const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
   // index.html already applied the saved locale to <html> before first paint.
-  const [locale, setLocale] = useState<Locale>(() => (document.documentElement.lang === 'ar' ? 'ar' : 'en'));
+  const [locale, setLocaleState] = useState<Locale>(() => (document.documentElement.lang === 'ar' ? 'ar' : 'en'));
 
-  useEffect(() => {
+  // A layout effect, so `dir` is already flipped when the view transition takes its "after" snapshot.
+  useLayoutEffect(() => {
     const root = document.documentElement;
     root.lang = locale;
     root.dir = locale === 'ar' ? 'rtl' : 'ltr';
@@ -30,7 +34,14 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     }
   }, [locale]);
 
-  const value = useMemo(() => ({ locale, setLocale }), [locale]);
+  const value = useMemo(
+    () => ({
+      locale,
+      setLocale: (next: Locale) =>
+        withViewTransition(() => setLocaleState(next), { flip: next === 'ar' ? 'rtl' : 'ltr' }),
+    }),
+    [locale],
+  );
 
   return (
     <LocaleContext value={value}>

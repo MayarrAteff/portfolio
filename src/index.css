@@ -3,25 +3,45 @@
 @tailwind utilities;
 
 @layer base {
+  /* Zinc neutrals with one violet accent; the blue-violet-pink gradient is kept for a few highlights. */
   :root {
-    --bg: 250 250 249;
+    --bg: 250 250 250;
     --surface: 255 255 255;
-    --fg: 23 23 23;
-    --muted: 92 92 92;
-    --line: 229 229 229;
-    --accent: 79 70 229;
-    --xray: 14 116 144;
+    --surface-2: 244 244 245;
+    --fg: 9 9 11;
+    --muted: 82 82 91;
+    --accent: 124 58 237;
+    --g1: 37 99 235;
+    --g2: 124 58 237;
+    --g3: 219 39 119;
+    --dots: 9 9 11 / 0.07;
+    --glow: 124 58 237 / 0.1;
+    /* Skill group colors: dark enough on white to carry small text. */
+    --frontend: 3 105 161;
+    --data: 4 120 87;
+    --architecture: 180 83 9;
+    --backend: 190 18 60;
+    --design: 124 58 237;
     color-scheme: light;
   }
 
   :root.dark {
-    --bg: 10 10 12;
-    --surface: 20 20 24;
-    --fg: 237 237 237;
+    --bg: 9 9 11;
+    --surface: 18 18 22;
+    --surface-2: 26 26 32;
+    --fg: 250 250 250;
     --muted: 161 161 170;
-    --line: 39 39 45;
-    --accent: 129 140 248;
-    --xray: 34 211 238;
+    --accent: 167 139 250;
+    --g1: 96 165 250;
+    --g2: 167 139 250;
+    --g3: 244 114 182;
+    --dots: 255 255 255 / 0.06;
+    --glow: 139 92 246 / 0.16;
+    --frontend: 56 189 248;
+    --data: 52 211 153;
+    --architecture: 251 191 36;
+    --backend: 251 113 133;
+    --design: 167 139 250;
     color-scheme: dark;
   }
 
@@ -31,31 +51,165 @@
 
   body {
     @apply bg-bg font-sans text-fg antialiased transition-colors duration-300;
-  }
-
-  :lang(ar) body {
-    font-family: 'IBM Plex Sans Arabic', 'Inter Variable', system-ui, sans-serif;
-  }
-
-  /* X-ray mode: a blueprint grid behind everything. */
-  html.xray body {
+    /* A dotted canvas with a soft glow behind the hero. */
     background-image:
-      linear-gradient(rgb(var(--xray) / 0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(var(--xray) / 0.07) 1px, transparent 1px);
-    background-size: 24px 24px;
+      radial-gradient(60rem 30rem at 50% -10%, rgb(var(--glow)), transparent 70%),
+      radial-gradient(rgb(var(--dots)) 1px, transparent 1px);
+    background-size:
+      100% 100%,
+      22px 22px;
+    background-repeat: no-repeat, repeat;
   }
 
   section[id] {
-    scroll-margin-top: 5rem;
+    scroll-margin-top: 6rem;
   }
 
   ::selection {
-    @apply bg-accent/20;
+    @apply bg-accent/25;
   }
 
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
+  }
+}
+
+@layer components {
+  .text-gradient {
+    background-image: linear-gradient(90deg, rgb(var(--g1)), rgb(var(--g2)) 45%, rgb(var(--g3)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Fixed in both themes: it sits under white text, which the lighter dark-theme gradient couldn't carry. */
+  .bg-gradient-brand {
+    background-image: linear-gradient(135deg, #7c3aed, #db2777);
+  }
+
+  .avatar-ring {
+    background-image: conic-gradient(
+      from 180deg,
+      rgb(var(--g1)),
+      rgb(var(--g2)),
+      rgb(var(--g3)),
+      #fbbf24,
+      rgb(var(--g1))
+    );
+  }
+
+  /* A soft wash of the card's group color from its top start corner. */
+  .tone-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 7rem;
+    pointer-events: none;
+    background: radial-gradient(120% 100% at 0% 0%, rgb(var(--c) / 0.16), transparent 70%);
+  }
+
+  [dir='rtl'] .tone-glow::before {
+    background: radial-gradient(120% 100% at 100% 0%, rgb(var(--c) / 0.16), transparent 70%);
+  }
+
+  /* The hero's bento grid. Areas follow the inline direction, so the whole grid mirrors in Arabic. */
+  .bento {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'intro' 'now' 'time' 'project' 'stack' 'lang' 'contact';
+  }
+
+  @media (min-width: 640px) {
+    .bento {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        'intro intro'
+        'now time'
+        'project project'
+        'stack stack'
+        'lang contact';
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .bento {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-rows: minmax(10rem, auto);
+      grid-template-areas:
+        'intro intro now time'
+        'intro intro project project'
+        'stack stack lang contact';
+    }
+  }
+
+  /* Brand logos in their own color, except where that color vanishes into the theme (GitHub's near-black
+     on dark, TanStack's near-white on light): those take the text color instead. */
+  .brand-icon {
+    fill: var(--brand);
+  }
+
+  :root.dark .brand-icon.brand-dark,
+  :root:not(.dark) .brand-icon.brand-light {
+    fill: rgb(var(--fg));
+  }
+
+  /* Skill group colors, set on any element as `--c`. */
+  .tone-frontend {
+    --c: var(--frontend);
+  }
+  .tone-data {
+    --c: var(--data);
+  }
+  .tone-architecture {
+    --c: var(--architecture);
+  }
+  .tone-backend {
+    --c: var(--backend);
+  }
+  .tone-design {
+    --c: var(--design);
+  }
+}
+
+/*
+ * The language switch. The new page is revealed in the direction it reads: Arabic sweeps in from the right,
+ * English from the left. Only during a flip, so other view transitions keep the default cross-fade.
+ */
+html[data-flip]::view-transition-old(root),
+html[data-flip]::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+
+html[data-flip]::view-transition-old(root) {
+  animation: none;
+}
+
+html[data-flip='rtl']::view-transition-new(root) {
+  animation: reveal-from-right 650ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+html[data-flip='ltr']::view-transition-new(root) {
+  animation: reveal-from-left 650ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Both ends spelled out: inset() can't interpolate to the default `none`, it would just jump halfway. */
+@keyframes reveal-from-right {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes reveal-from-left {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
   }
 }
