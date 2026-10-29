@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Mayar Atef · Front-End Developer</title>
+    <meta
+      name="description"
+      content="Front-End Developer (React & TypeScript) in Alexandria, Egypt. A portfolio that explains itself: press X to see how it's built."
+    />
+    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mayar Atef · Front-End Developer" />
+    <meta property="og:description" content="A portfolio that explains itself. Press X to see how it's built." />
+    <meta property="og:image" content="/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // Runs before first paint so there is no flash of the wrong theme or text direction.
+      (function () {
+        var root = document.documentElement;
+        try {
+          var theme = localStorage.getItem('theme');
+          var dark = theme ? theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          root.classList.toggle('dark', dark);
+          if (localStorage.getItem('locale') === 'ar') {
+            root.lang = 'ar';
+            root.dir = 'rtl';
+          }
+        } catch (e) {
+          root.classList.toggle('dark', matchMedia('(prefers-color-scheme: dark)').matches);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
