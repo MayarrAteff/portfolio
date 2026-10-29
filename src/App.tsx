@@ -2,6 +2,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Footer } from '@/components/Footer';
 import { SiteHeader } from '@/components/SiteHeader';
+import { Starfield } from '@/components/Starfield';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { Contact } from '@/sections/Contact';
 import { Experience } from '@/sections/Experience';
@@ -18,6 +19,7 @@ export function App() {
       >
         <FormattedMessage id="nav.skip" />
       </a>
+      <Starfield />
       <SiteHeader />
       <main id="main">
         <Hero />

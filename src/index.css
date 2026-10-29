@@ -35,7 +35,7 @@
     --g1: 96 165 250;
     --g2: 167 139 250;
     --g3: 244 114 182;
-    --dots: 255 255 255 / 0.06;
+    --dots: 255 255 255 / 0;
     --glow: 139 92 246 / 0.16;
     --frontend: 56 189 248;
     --data: 52 211 153;
@@ -156,6 +156,26 @@
     fill: rgb(var(--fg));
   }
 
+  /* The starfield only exists in the dark theme; in light mode the dot grid stays. */
+  .starfield {
+    display: none;
+  }
+
+  :root.dark .starfield {
+    display: block;
+  }
+
+  .twinkle {
+    opacity: 0.35;
+    box-shadow: 0 0 6px 1px rgb(255 255 255 / 0.6);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .twinkle {
+      animation: twinkle 4s ease-in-out infinite;
+    }
+  }
+
   /* Skill group colors, set on any element as `--c`. */
   .tone-frontend {
     --c: var(--frontend);
@@ -171,6 +191,18 @@
   }
   .tone-design {
     --c: var(--design);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
   }
 }
 
