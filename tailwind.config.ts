@@ -11,16 +11,18 @@ export default {
       colors: {
         bg: token('bg'),
         surface: token('surface'),
+        'surface-2': token('surface-2'),
         fg: token('fg'),
         muted: token('muted'),
-        line: token('line'),
+        // Borders are the text color at low alpha (`border-line/10`), so they suit both themes.
+        line: token('fg'),
         accent: token('accent'),
-        xray: token('xray'),
       },
       fontFamily: {
-        sans: ['"Inter Variable"', '"IBM Plex Sans Arabic"', 'system-ui', 'sans-serif'],
-        // Arabic glyphs inside mono text fall back to Plex Arabic, which keeps the letters joined.
-        mono: ['"JetBrains Mono Variable"', '"IBM Plex Sans Arabic"', 'ui-monospace', 'monospace'],
+        sans: ['"Geist Variable"', '"IBM Plex Sans Arabic"', 'system-ui', 'sans-serif'],
+        // Bricolage has no Arabic, so Arabic headings fall through to Plex Sans Arabic in its bold weight.
+        display: ['"Bricolage Grotesque Variable"', '"IBM Plex Sans Arabic"', '"Geist Variable"', 'system-ui', 'sans-serif'],
+        mono: ['"Geist Mono Variable"', '"IBM Plex Sans Arabic"', 'ui-monospace', 'monospace'],
       },
     },
   },

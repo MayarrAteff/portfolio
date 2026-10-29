@@ -1,9 +1,11 @@
 import { FormattedMessage } from 'react-intl';
 
+import { site } from '@/data/site';
 import type { MessageId } from '@/i18n/locale';
-import { Inspect } from '@/xray/Inspect';
+import { useLocale } from '@/i18n/LocaleProvider';
 
 import { LangToggle } from './LangToggle';
+import { LogoMark } from './LogoMark';
 import { ThemeToggle } from './ThemeToggle';
 
 const links: { href: string; label: MessageId }[] = [
@@ -13,32 +15,39 @@ const links: { href: string; label: MessageId }[] = [
   { href: '#contact', label: 'nav.contact' },
 ];
 
+/** A floating glass pill instead of a full-width bar, so the dotted page shows around it. */
 export function SiteHeader() {
+  const { locale } = useLocale();
+
   return (
-    <header className="sticky top-0 z-40 border-b border-line/70 bg-bg/80 backdrop-blur-md">
-      <Inspect name="SiteHeader" file="src/components/SiteHeader.tsx" note="xray.note.header">
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-4 sm:px-6">
-          <a href="#top" className="text-base font-semibold tracking-tight">
-            <FormattedMessage id="hero.name" />
-            <span className="text-accent">.</span>
+    <header className="sticky top-3 z-40 px-4 sm:px-6">
+      <div className="mx-auto flex max-w-4xl items-center justify-between gap-3 rounded-full border border-line/10 bg-surface/70 py-1.5 pe-1.5 ps-2 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.25)] backdrop-blur-xl">
+        <a href="#top" className="flex items-center gap-2.5 rounded-full pe-2 text-sm font-semibold">
+          <LogoMark />
+          <span className="sr-only sm:not-sr-only">{site.name[locale]}</span>
+        </a>
+        <nav aria-label="Primary" className="hidden md:block">
+          <ul className="flex gap-6 text-sm text-muted">
+            {links.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} className="transition hover:text-fg">
+                  <FormattedMessage id={link.label} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className="flex items-center gap-1.5">
+          <LangToggle />
+          <ThemeToggle />
+          <a
+            href="#contact"
+            className="inline-flex rounded-full bg-fg px-4 py-2 text-sm font-semibold text-bg transition hover:bg-fg/85"
+          >
+            <FormattedMessage id="nav.talk" />
           </a>
-          <nav aria-label="Primary" className="hidden md:block">
-            <ul className="flex gap-7 text-sm text-muted">
-              {links.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href} className="transition hover:text-fg">
-                    <FormattedMessage id={link.label} />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <div className="flex items-center gap-2">
-            <LangToggle />
-            <ThemeToggle />
-          </div>
         </div>
-      </Inspect>
+      </div>
     </header>
   );
 }

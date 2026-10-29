@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useIntl } from 'react-intl';
 
 import { iconButton } from '@/lib/styles';
-import { Inspect } from '@/xray/Inspect';
 
 import { MoonIcon, SunIcon } from './icons';
 
@@ -23,22 +22,13 @@ export function ThemeToggle() {
   }
 
   return (
-    <Inspect
-      name="ThemeToggle"
-      file="src/components/ThemeToggle.tsx"
-      note="xray.note.themeToggle"
-      compact
-      label="below"
-      className="rounded-full"
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={intl.formatMessage({ id: dark ? 'theme.toLight' : 'theme.toDark' })}
+      className={iconButton}
     >
-      <button
-        type="button"
-        onClick={toggle}
-        aria-label={intl.formatMessage({ id: dark ? 'theme.toLight' : 'theme.toDark' })}
-        className={iconButton}
-      >
-        {dark ? <SunIcon /> : <MoonIcon />}
-      </button>
-    </Inspect>
+      {dark ? <SunIcon /> : <MoonIcon />}
+    </button>
   );
 }

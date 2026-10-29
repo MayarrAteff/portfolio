@@ -47,3 +47,42 @@ export const hireflow = {
     'react-intl',
   ],
 };
+
+/** The day job. The product is private, so the card shows a redrawn preview instead of links. */
+export const quotem = {
+  name: 'Quotem',
+  tagline: {
+    en: 'The front end of a procurement platform, from purchase request to winning quote.',
+    ar: 'الواجهة الأمامية لمنصة مشتريات، من طلب الشراء حتى اختيار أفضل عرض سعر.',
+  } satisfies Localized,
+  highlights: [
+    {
+      en: 'Requisition flows and side-by-side quotation comparison.',
+      ar: 'مسارات طلبات الشراء ومقارنة عروض الأسعار جنبًا إلى جنب.',
+    },
+    {
+      en: 'Data-dense dashboards on TanStack Query and Router, without redundant network calls.',
+      ar: 'لوحات تحكم غنية بالبيانات مبنية على TanStack Query و Router، بدون طلبات شبكة مكررة.',
+    },
+    {
+      en: 'Drag-and-drop boards, guided onboarding tours and dynamic form validation.',
+      ar: 'لوحات سحب وإفلات، وجولات تعريفية، وتحقق ديناميكي من النماذج.',
+    },
+    {
+      en: 'English and Arabic with RTL, architecture docs and feature flags.',
+      ar: 'العربية والإنجليزية مع RTL، وتوثيق البنية، و feature flags.',
+    },
+  ] satisfies Localized[],
+  stack: [
+    'React',
+    'TypeScript',
+    'TanStack Query',
+    'TanStack Router',
+    'dnd-kit',
+    'React Hook Form',
+    'Yup',
+    'react-intl',
+    'Flipt',
+    'VitePress',
+  ],
+};

@@ -35,7 +35,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['vite.config.ts', 'tailwind.config.ts', 'postcss.config.js', 'build-stats.ts'],
+      files: ['vite.config.ts', 'tailwind.config.ts', 'postcss.config.js'],
       rules: { 'import/no-default-export': 'off' },
     },
   ],

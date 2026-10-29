@@ -96,5 +96,6 @@ export const education = {
   } satisfies Localized,
   school: { en: 'Alexandria University', ar: 'جامعة الإسكندرية' } satisfies Localized,
   years: '2018 – 2022',
-  grade: { en: 'Distinction · CGPA 3.6 / 4.0', ar: 'تقدير امتياز · المعدل التراكمي 3.6 / 4.0' } satisfies Localized,
+  honors: { en: 'Graduated with Distinction', ar: 'التقدير العام: امتياز' } satisfies Localized,
+  gpa: { value: 3.6, max: 4 },
 };

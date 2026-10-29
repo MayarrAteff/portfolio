@@ -1,16 +1,28 @@
+import type { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import type { MessageId } from '@/i18n/locale';
+import { cn } from '@/lib/cn';
+import { eyebrow } from '@/lib/styles';
 
-export function SectionHeading({ index, title }: { index: string; title: MessageId }) {
+type SectionHeadingProps = {
+  label: MessageId;
+  title: MessageId;
+  /** Optional lead paragraph under the title. */
+  children?: ReactNode;
+};
+
+export function SectionHeading({ label, title, children }: SectionHeadingProps) {
   return (
-    <div className="flex items-center gap-4">
-      <span className="font-mono text-sm text-accent">{index}</span>
-      {/* Letter-spacing breaks the joins between Arabic letters, so it's reset in RTL. */}
-      <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-muted rtl:tracking-normal">
+    <div className="max-w-2xl">
+      <p className={cn('flex items-center gap-2 text-muted', eyebrow)}>
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
+        <FormattedMessage id={label} />
+      </p>
+      <h2 className="mt-3 text-balance font-display text-4xl font-bold tracking-tight sm:text-5xl rtl:tracking-normal">
         <FormattedMessage id={title} />
       </h2>
-      <span className="h-px flex-1 bg-line" />
+      {children && <p className="mt-4 text-lg leading-relaxed text-muted">{children}</p>}
     </div>
   );
 }
